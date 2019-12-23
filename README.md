@@ -27,6 +27,7 @@ Overall evnironment will be deployed from terraform with following characteristi
  - VMSS scale-in policy: NewestVM, configured from the portal. 
  - Application Gateway: Backend pool and custom probe configured for this VMSS.
  - Applictions: Written in python, leverages Azure REST API and Azure SDK for python.
+ - Managed Image: Managed Image, which has data disk will be referred.
  
 ## Terraform 
 Clone this git and modify terraform.tfvars as required. Execute following commands to deploy the environment.

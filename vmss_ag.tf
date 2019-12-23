@@ -1,5 +1,10 @@
 ## VMSS deployment test with MSI enabled in Singapore.  
-## AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes
+## AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes
+
+data "azurerm_image" "managed_image" {
+  name                = "${var.managed_image_name}"
+  resource_group_name = "${var.managed_image_resourcegroup_name}"
+}
 
 resource "azurerm_resource_group" "terraformrg" {
   name     = "${var.prefix}-rg"
@@ -7,17 +12,6 @@ resource "azurerm_resource_group" "terraformrg" {
 
   tags = {
   environment = "Terraform deployment"
-  }
-}
-
-# Create a Proximity Placement Group
-resource "azurerm_proximity_placement_group" "terraformppg" {
-  name                = "TerraformPPG"
-  location            = "${azurerm_resource_group.terraformrg.location}"
-  resource_group_name = "${azurerm_resource_group.terraformrg.name}"
-
-  tags = {
-    environment = "Terraform Deployment"
   }
 }
 
@@ -122,7 +116,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   }
   
   os_profile_linux_config {
-    disable_password_authentication = true
+    disable_password_authentication = false
             ssh_keys {
             path     = "/home/myadmin/.ssh/authorized_keys"
             key_data = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCczY+8XfyQ3vc6kvCUMM10pTWKAUhsvKV82OUK8qjWMnG5De7zUGJ+KeLY75+zxQAZt7gkwUBudDNTK6HmEyUQ9W/q5KmvEqfa641CwFuksj2umXCkIyFcm0mAhAIxcKah8SwVfSl2zJlp/dqoSCBpzGFXEIYp4OtBiQTAjupAeLPYwKtXdUXzjmMzfhSpY4H4EYJzgzt/eS2thYMgOtvv5kr3/Xbee70STNVyoliSUHhW5EpDOmgD7/TRGAy+OqRUoqtyRMDByfRKHT62r+OcmZUpUiylnVllhmQyLYuLCXDZIqRTVfQv0G2QoCIV7CsJ0XG7bmalbp+D/bdgugsN"
@@ -146,15 +140,24 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
     name              = ""
     caching           = "ReadWrite"
     create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+    managed_disk_type = "Premium_LRS"
+  }
+
+  storage_profile_data_disk {
+    lun = 0
+    create_option = "FromImage"
+    managed_disk_type = "Premium_LRS"
+    disk_size_gb      = 250
   }
 
   storage_profile_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
+    # publisher = "Canonical"
+    # offer     = "UbuntuServer"
+    # sku       = "16.04-LTS"
+    # version   = "latest"
+    id = "${data.azurerm_image.managed_image.id}"
   }
+
   identity {
     type = "SystemAssigned"
   }
