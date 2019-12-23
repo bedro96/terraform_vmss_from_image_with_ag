@@ -1,9 +1,13 @@
 ## VMSS deployment test with MSI enabled in Singapore.  
 ## AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes
 
+data "azurerm_resource_group" "managed_image_resourcegroup_name" {
+  name = "${var.managed_image_resourcegroup_name}"
+}
+ 
 data "azurerm_image" "managed_image" {
   name                = "${var.managed_image_name}"
-  resource_group_name = "${var.managed_image_resourcegroup_name}"
+  resource_group_name = "${data.azurerm_resource_group.managed_image_resourcegroup_name.name}"
 }
 
 resource "azurerm_resource_group" "terraformrg" {
