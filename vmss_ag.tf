@@ -100,7 +100,6 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   resource_group_name = "${azurerm_resource_group.terraformrg.name}"
   depends_on = [azurerm_application_gateway.network]
   upgrade_policy_mode = "Manual"
-  proximity_placement_group_id = "${azurerm_proximity_placement_group.terraformppg.id}"
   overprovision = false
   
   sku {
