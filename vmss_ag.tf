@@ -108,7 +108,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   overprovision = false
   
   sku {
-    name     = "Standard_D1_v2"
+    name     = "Standard_F2s"
     tier     = "Standard"
     capacity = 1
   }
