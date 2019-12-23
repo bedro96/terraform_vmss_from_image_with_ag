@@ -1,0 +1,2 @@
+prefix="kunhovmss"
+location="southeastasia"
