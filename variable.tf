@@ -11,6 +11,6 @@ variable "managed_image_resourcegroup_name" {
   default = "test-imgrepo-rg"
 }
 variable "managed_image_name" {
-    description = "The name of managed image to be created."
-    default = "imgtestwithdatadisk"
+  description = "The name of managed image to be created."
+  default = "imgtestwithdatadisk"
 }
