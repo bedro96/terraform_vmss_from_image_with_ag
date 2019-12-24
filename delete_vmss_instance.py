@@ -20,6 +20,7 @@ timeSleep = 10
 
 def delete_vmss_instance():
     ##MSI based authentication
+    logger.info("Entry Point of delete_vmss_instance")
     credentials       = MSIAuthentication()
     metadata          = InstanceMetadata().populate()
     
@@ -31,8 +32,10 @@ def delete_vmss_instance():
     resourceGroupName = metadata.resourceGroupName
     vmScaleSetName    = metadata.vmScaleSetName
     vmname            = metadata.name
+    logger.info("metadata.name : " + vmname)
     vm_id = vmname.split("_")
     convertedInt_vm_id = int(vm_id[1])
+    logger.info("convertedInt_vm_id : " + convertedInt_vm_id)
     
     #host_name         = socket.gethostname()
     #vmid              = hostname_to_vmid(host_name)
