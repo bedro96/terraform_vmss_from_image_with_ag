@@ -17,9 +17,13 @@ def delete_vmss_instance():
 
     resourceGroupName = vmInstance.resourceGroupName
     vmScaleSetName    = vmInstance.vmScaleSetName
-    host_name         = socket.gethostname()
-    vmid              = hostname_to_vmid(host_name)
-    compute_client.virtual_machine_scale_set_vms.delete(resourceGroupName, vmScaleSetName, vmid)
+    vmname            = vmInstance.name
+    vm_id = vmname.split("_")
+    convertedInt_vm_id = int(vm_id[1])
+    
+    #host_name         = socket.gethostname()
+    #vmid              = hostname_to_vmid(host_name)
+    compute_client.virtual_machine_scale_set_vms.delete(resourceGroupName, vmScaleSetName, convertedInt_vm_id)
 
 def hostname_to_vmid(hostname):
     # get last 6 characters and remove leading zeroes
