@@ -28,7 +28,11 @@ Overall evnironment will be deployed from terraform with following characteristi
  - Application Gateway: Backend pool and custom probe configured for this VMSS.
  - Applictions: Written in python, leverages Azure REST API and Azure SDK for python.
  - Managed Image: Managed Image, which has data disk will be referred.
- 
+ - VMID : Numeric id of VMSS instance is parsed from "name" of IMDS from each VMSS instance. 
+ - Data Drive formatting : setup.sh has the code for fdisk and making an entry in /etc/fstab.
+ - Managed Image : a managed image will be retrieved for provisioning of VMSS instance.
+ - Versioning : This code supersedes https://github.com/bedro96/terraform_vmss_ag
+
 ## Terraform 
 Clone this git and modify terraform.tfvars as required. Execute following commands to deploy the environment.
 
