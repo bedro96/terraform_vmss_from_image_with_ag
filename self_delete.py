@@ -39,3 +39,6 @@ def hostname_to_vmid(hostname):
             vmid += (ord(x) - 55) * multiplier
         multiplier *= 36
     return vmid
+
+if __name__ == '__main__':
+    delete_vmss_instance()

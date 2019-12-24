@@ -35,7 +35,6 @@ def delete_vmss_instance():
     logger.info("metadata.name : " + vmname)
     vm_id = vmname.split("_")
     convertedInt_vm_id = int(vm_id[1])
-    logger.info("convertedInt_vm_id : " + convertedInt_vm_id)
     
     #host_name         = socket.gethostname()
     #vmid              = hostname_to_vmid(host_name)
