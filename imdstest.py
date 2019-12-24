@@ -9,7 +9,7 @@ config.read('config.ini')
 imds_url = config.get('imds', 'imds_url')
 response = requests.get(imds_url, headers={"Metadata":"true"})
 response_txt = json.loads(response.text)
-#print('Original Response : {}'.format(response_txt))
+print('Original Response : {}'.format(response_txt))
 #populate required instance variables
 vmId = response_txt['vmId']
 name = response_txt['name']

@@ -173,7 +173,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
 
     settings = <<SETTINGS
     {
-        "fileUris": ["https://raw.githubusercontent.com/bedro96/terraform_vmss_ag/master/setup.sh"],
+        "fileUris": ["https://raw.githubusercontent.com/bedro96/terraform_vmss_from_image_with_ag/master/setup.sh"],
         "commandToExecute": "/bin/bash ./setup.sh"
     }
     SETTINGS
