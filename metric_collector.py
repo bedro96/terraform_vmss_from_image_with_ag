@@ -11,7 +11,7 @@ def collect_metrics():
     logger.info("Collecting Metrics .....")
 
     cpu_percent = psutil.cpu_percent()
-    logger.info("Current CPU utilization is %s percent.  " % cpu_percent)
+    logger.info(f"Current CPU utilization is {cpu_percent} percent.  ")
 
 def post_metrics():
     global cpu_percent
@@ -25,16 +25,16 @@ def post_metrics():
                     resourceName = vmInstance.name)
 
     data = getMetricPostData(cpu_percent)
-    logger.info("Data: " + json.dumps(data))
+    logger.info(f"Data: {json.dumps(data)}")
 
     headers = config.get('monitor', 'metric_headers');
     headers = json.loads(headers)
     headers['Content-Length'] = str(len(data))
-    headers['Authorization'] = "Bearer " + vmInstance.access_token
+    headers['Authorization'] = f"Bearer {vmInstance.access_token}"
 
     #formatted_headers = headers.format(clength = len(data))
     #formatted_headers['Authorization'] = "Bearer " + vmInstance.access_token
-    logger.info("headers: " + json.dumps(headers))
+    logger.info(f"headers: {json.dumps(headers)}")
 
 
     requests.post(formatted_url, json=data, headers=headers)
@@ -42,27 +42,17 @@ def post_metrics():
 
 
 def getMetricPostData(metric_data):
-    data = {
+    return {
         'time': datetime.datetime.now().isoformat(),
-        'data':{
-            'baseData':{
+        'data': {
+            'baseData': {
                 'metric': 'CPU Utilization',
                 'namespace': 'SamsungMetrics',
-                'dimNames':[
-                    "CPU Percentage"
-                ],
-                'series':[
-                    {
-                        'dimValue':[
-                            metric_data
-                        ]
-                    }
-                ]
+                'dimNames': ["CPU Percentage"],
+                'series': [{'dimValue': [metric_data]}],
             }
-        }
+        },
     }
-        
-    return data
 
 
 vmInstance = VMInstance().populate()

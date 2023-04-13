@@ -24,12 +24,9 @@ def writebody():
 
     response.status = instance_status
 
-    status = 'Healthy'
-    if instance_status == 410:
-        status = 'Gone'
-
+    status = 'Gone' if instance_status == 410 else 'Healthy'
     body = '<html><head><title>VM Health Check</title></head>'
-    body += '<body><h2> ' + metadata.name + ' is ' + status + ' </h2><ul><h3></body></html>'
+    body += f'<body><h2> {metadata.name} is {status} </h2><ul><h3></body></html>'
     return body
 
 @route('/')

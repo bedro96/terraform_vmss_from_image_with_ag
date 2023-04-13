@@ -32,11 +32,7 @@ def hostname_to_vmid(hostname):
     vmid = 0
     # reverse string and process each char
     for x in hexatrig[::-1]:
-        if x.isdigit():
-            vmid += int(x) * multiplier
-        else:
-            # convert letter to corresponding integer
-            vmid += (ord(x) - 55) * multiplier
+        vmid += int(x) * multiplier if x.isdigit() else (ord(x) - 55) * multiplier
         multiplier *= 36
     return vmid
 
