@@ -75,14 +75,11 @@ class InstanceMetadata:
     def isPendingDelete(self):
         deleteTag = config.get('imds', 'pending_delete_tag')
         pendingDeleteState = False
-        
+
         for tag in self.tagsList:
             for k, v in tag.items():
                 if( k == 'name' and v == deleteTag):
                     pendingDeleteState = True
-        
-        if pendingDeleteState:
-            return True
-        else:
-            return False
+
+        return bool(pendingDeleteState)
 
